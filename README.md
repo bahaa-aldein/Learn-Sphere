@@ -61,7 +61,7 @@ Docker · Vercel · Sentry · CI/CD pipelines
 ### Installation
 
 ```bash
-git clone https://github.com/BahaaAldein10/Learn-Sphere.git
+git clone https://github.com/bahaa-aldein/Learn-Sphere.git
 cd Learn-Sphere
 npm install
 ```
