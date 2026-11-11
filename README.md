@@ -10,9 +10,9 @@ A full-stack learning management system (LMS) combining real-time collaboration,
 
 - **Course management** — teachers create and publish multimedia courses with chapter-based structure, file attachments, and video content
 - **Real-time collaboration** — live document editing with presence indicators and in-context comments powered by Liveblocks
-- **AI quiz generation** — bilingual (English & Arabic) quiz creation with MCQ, true/false, and short answer types; AI-generated quizzes completed 40% faster than manual ones
+- **AI quiz generation** — bilingual (English & Arabic) quiz creation with MCQ, true/false, and short answer types
 - **AI chatbot** — student assistant for course guidance and instant help
-- **Community forum** — Q&A forum with nested replies, likes, and search
+- **Community forum** — Q&A forum with answers, likes, and search
 - **Progress tracking** — per-chapter completion tracking with analytics dashboards for teachers and students
 - **Payments & enrollment** — Stripe-powered course purchases with webhook-verified automatic enrollment
 - **Role-based access** — separate dashboards and permissions for students, teachers, and admins
@@ -28,22 +28,21 @@ Next.js 14 · React 18 · TypeScript · Tailwind CSS · Radix UI · Framer Motio
 Next.js API Routes · Prisma · MongoDB Atlas · Zod · UploadThing
 
 **AI & real-time**
-Groq AI SDK · Liveblocks · WebSockets
+Groq AI SDK · Liveblocks
 
 **Auth & payments**
 Clerk · Stripe + Webhooks
 
 **Infrastructure**
-Docker · Vercel · Sentry · CI/CD pipelines
+Docker · Vercel · Sentry
 
 ---
 
 ## Performance
 
-- ~150ms average API response time via Prisma connection pooling and database indexing
-- 40% payload reduction through optimized queries and selective field fetching
-- 30% faster initial page load via lazy loading, dynamic imports, and Next.js Image optimization
-- 92% backend and 85% frontend unit test coverage
+- Database indexes (`@@index`) on frequently queried fields in the Prisma schema
+- Selective field fetching in Prisma queries
+- Lazy loading, dynamic imports, and Next.js Image optimization on the frontend
 
 ---
 
@@ -74,9 +73,13 @@ Create a `.env.local` file in the root directory:
 # Database
 DATABASE_URL=
 
+# App
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+
 # Auth (Clerk)
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
+CLERK_WEBHOOK_SECRET=
 
 # Groq AI
 GROQ_API_KEY=
@@ -89,8 +92,7 @@ STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 
 # UploadThing
-UPLOADTHING_SECRET=
-UPLOADTHING_APP_ID=
+UPLOADTHING_TOKEN=
 ```
 
 ### Run locally
