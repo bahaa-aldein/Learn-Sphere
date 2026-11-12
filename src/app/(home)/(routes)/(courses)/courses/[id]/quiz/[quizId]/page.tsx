@@ -1,4 +1,4 @@
-import QuizInterface from '@/components/shared/QuizInterface ';
+import QuizInterface from '@/components/shared/QuizInterface';
 import { getQuiz } from '@/lib/actions/quiz.actions';
 import { redirect } from 'next/navigation';
 

@@ -4,7 +4,7 @@
 import { UpdateUserRoleParams } from '@/types';
 import { clerkClient } from '@clerk/nextjs/server';
 import prisma from '../db';
-import { liveblocks } from '../liveblocks';
+import { getLiveblocks } from '../liveblocks';
 import { getUserColor, parseStringify } from '../utils';
 
 interface CreateUserParams {
@@ -227,7 +227,7 @@ export async function getDocumentUsers({
   text: string;
 }) {
   try {
-    const room = await liveblocks.getRoom(roomId);
+    const room = await getLiveblocks().getRoom(roomId);
 
     const users = Object.keys(room.usersAccesses).filter(
       (email) => email !== currentUser

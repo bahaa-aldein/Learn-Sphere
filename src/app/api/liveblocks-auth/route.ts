@@ -1,4 +1,4 @@
-import { liveblocks } from '@/lib/liveblocks';
+import { getLiveblocks } from '@/lib/liveblocks';
 import { getUserColor } from '@/lib/utils';
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   };
 
   // Identify the user and return the result
-  const { status, body } = await liveblocks.identifyUser(
+  const { status, body } = await getLiveblocks().identifyUser(
     {
       userId: user.info.email,
       groupIds: [],

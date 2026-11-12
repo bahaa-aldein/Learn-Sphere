@@ -34,8 +34,9 @@ FROM base AS production
 # Set environment variable for production
 ENV NODE_ENV=production
 
-# Reinstall only production dependencies
-RUN npm ci --only=production
+# Note: node_modules is copied from the builder stage below. Do not re-run
+# `npm ci --only=production` here: the `postinstall` script runs
+# `prisma generate`, and `prisma` is a devDependency, so the install fails.
 
 # Create non-root user and group
 RUN addgroup -g 1001 -S nodejs && \
