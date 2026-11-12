@@ -9,7 +9,7 @@ import {
 } from '@/types';
 import { revalidatePath } from 'next/cache';
 import { v4 as uuidv4 } from 'uuid';
-import { liveblocks } from '../liveblocks';
+import { getLiveblocks } from '../liveblocks';
 import { getAccessType, handleError, parseStringify } from '../utils';
 
 export async function createDocument(params: CreateDocumentParams) {
@@ -27,7 +27,7 @@ export async function createDocument(params: CreateDocumentParams) {
       [email]: ['room:write'],
     };
 
-    const room = await liveblocks.createRoom(roomId, {
+    const room = await getLiveblocks().createRoom(roomId, {
       defaultAccesses: ['room:write'],
       usersAccesses,
       metadata,
@@ -49,7 +49,7 @@ export async function getDocument({
   userId: string;
 }) {
   try {
-    const room = await liveblocks.getRoom(roomId);
+    const room = await getLiveblocks().getRoom(roomId);
 
     const hasAccess = Object.keys(room.usersAccesses).includes(userId);
 
@@ -69,7 +69,7 @@ export async function updateDocument({
   title: string;
 }) {
   try {
-    const room = await liveblocks.updateRoom(roomId, {
+    const room = await getLiveblocks().updateRoom(roomId, {
       metadata: {
         title,
       },
@@ -85,7 +85,7 @@ export async function updateDocument({
 
 export async function getDocuments(email: string) {
   try {
-    const rooms = await liveblocks.getRooms({ userId: email });
+    const rooms = await getLiveblocks().getRooms({ userId: email });
 
     return parseStringify(rooms);
   } catch (error) {
@@ -104,14 +104,14 @@ export const updateDocumentAccess = async ({
       [email]: getAccessType(userType) as AccessType,
     };
 
-    const room = await liveblocks.updateRoom(roomId, {
+    const room = await getLiveblocks().updateRoom(roomId, {
       usersAccesses,
     });
 
     if (room) {
       const notificationId = uuidv4();
 
-      await liveblocks.triggerInboxNotification({
+      await getLiveblocks().triggerInboxNotification({
         userId: email,
         kind: '$documentAccess',
         subjectId: notificationId,
@@ -141,13 +141,13 @@ export const removeCollaborator = async ({
   email: string;
 }) => {
   try {
-    const room = await liveblocks.getRoom(roomId);
+    const room = await getLiveblocks().getRoom(roomId);
 
     if (room.metadata.email === email) {
       throw new Error('You cannot remove yourself from the document');
     }
 
-    const updatedRoom = await liveblocks.updateRoom(roomId, {
+    const updatedRoom = await getLiveblocks().updateRoom(roomId, {
       usersAccesses: {
         [email]: null,
       },
@@ -162,7 +162,7 @@ export const removeCollaborator = async ({
 
 export const deleteDocument = async (roomId: string) => {
   try {
-    await liveblocks.deleteRoom(roomId);
+    await getLiveblocks().deleteRoom(roomId);
   } catch (error) {
     console.log(`Error happened while deleting a room: ${error}`);
   }
