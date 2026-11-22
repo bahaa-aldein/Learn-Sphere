@@ -2,8 +2,6 @@
 
 A full-stack learning management system (LMS) combining real-time collaboration, AI-powered assessments, and course management into a single platform. Built for teachers who create courses and students who engage with them — with live document editing, AI quiz generation, a community forum, and Stripe-powered enrollments.
 
-🔗 **Live demo**: https://learn-sphere-pink.vercel.app
-
 ---
 
 ## Features
